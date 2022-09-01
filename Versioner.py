@@ -13,6 +13,12 @@ except:
     exit()
 if tool.GetAttrs("TOOLS_RegID") == "Loader": #Check that selected tool is Loader
     sourcePath = tool.GetInput("Clip") # Get path from lodaer
+    globalIn = tool.GetInput("GlobalIn")  # Get loader start frame (probably 0, but who knows...)
+    globalOut = tool.GetInput("GlobalOut") # Get loader end frame
+    if comp.GetAttrs("COMPN_RenderStart") != globalIn: # Check that comp IN equal source IN 
+        comp.SetAttrs({"COMPN_RenderStart":globalIn})  # Change if needed
+    if comp.GetAttrs("COMPN_RenderEnd") != globalOut:  #Check thah comp OUT equal source OUT
+        comp.SetAttrs({"COMPN_RenderEnd":globalOut})  # and change if needed
     if sourcePath == "":
         print("You need to set path to souce plate.")
         exit()
